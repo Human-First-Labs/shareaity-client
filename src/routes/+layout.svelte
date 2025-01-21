@@ -1,7 +1,6 @@
 <script lang="ts">
-	import SupabaseAuth from '$lib/am/supabase/SupabaseAuth.svelte';
-	import Footer from '$lib/Footer.svelte';
-import Header from '$lib/Header.svelte';
+	import PageCheck from '$lib/PageCheck.svelte';
+	import SupabaseAuth from '$lib/supabase/SupabaseAuth.svelte';
 	import '../app.css';
 
 	let { children } = $props();
@@ -11,15 +10,13 @@ import Header from '$lib/Header.svelte';
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
-<SupabaseAuth appName="MyTime">
+<SupabaseAuth>
 	<div class="app">
-		<Header />
-	
-		<main>
-			{@render children()}
-		</main>
-
-		<Footer/>
+		<PageCheck>
+			<main>
+				{@render children()}
+			</main>
+		</PageCheck>
 	</div>
 </SupabaseAuth>
 

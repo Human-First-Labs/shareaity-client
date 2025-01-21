@@ -34,6 +34,7 @@
 		"vite": "6.0.11"
 	},
 	"dependencies": {
-		"@supabase/supabase-js": "2.48.0"
+		"@supabase/supabase-js": "2.48.0",
+		"svelte-turnstile": "^0.10.0"
 	}
 }
