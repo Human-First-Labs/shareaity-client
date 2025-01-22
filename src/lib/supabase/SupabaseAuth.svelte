@@ -6,6 +6,7 @@
 
     const VITE_TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY
 
+    let checked: boolean = $state(false)
     let session: AuthSession | null = $state(null)
 
     const { children }: {
@@ -25,6 +26,7 @@
             
             supabase.auth.getSession().then(async (response) => {
                 if(!captchaToken){
+                    checked = true
                     return reject(new Error("captcha token is missing"));
                 }
                 const result = await supabase.auth.signInAnonymously({
@@ -36,9 +38,11 @@
                     console.error(result.error)
                 }
 
+                checked = true
                 controller?.signal.removeEventListener("abort", abortHandler);
                 resolve(response.data);
             }).catch((error) => {
+                checked = true
                 controller?.signal.removeEventListener("abort", abortHandler);
                 reject(error);
             });
@@ -65,9 +69,12 @@
     }
 </script>
 
-{#if !session}
+{#if !session && checked}
     <div class="cover">
         <div class="popup">
+            <h2>Sorry about this!</h2>
+            <h4>Just making sure you're not a bot</h4>
+            <small>You know how it is these days :(</small>
             <Turnstile siteKey={VITE_TURNSTILE_SITE_KEY} on:callback={tokenGetter}/>
         </div>
     </div>
@@ -76,6 +83,21 @@
 
 
 <style>
+    h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0
+    }
+    h4 {
+        font-size: 1.25rem;
+        font-weight: 500;
+        margin: 0
+    }
+    p{
+        font-size: 1rem;
+        font-weight: 400;
+        margin: 0
+    }
 	.cover {
 		display: flex;
 		flex-direction: column;
