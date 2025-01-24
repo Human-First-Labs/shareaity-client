@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from "@supabase/supabase-js";
 
 const SUPABASE_PROJECT_ID = import.meta.env.VITE_SUPABASE_PROJECT_ID
 const SUPABASE_API_KEY = import.meta.env.VITE_SUPABASE_API_KEY

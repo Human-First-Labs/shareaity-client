@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { AuthSession } from "@supabase/supabase-js";
-	import { supabase } from "./supabaseClient";
 	import { onMount, type Snippet } from "svelte";
 	import { Turnstile } from "svelte-turnstile";
+	import { supabase } from "./supabase";
 
     const VITE_TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY
 
@@ -78,9 +78,9 @@
             <Turnstile siteKey={VITE_TURNSTILE_SITE_KEY} on:callback={tokenGetter}/>
         </div>
     </div>
+{:else}
+    {@render children()}
 {/if}
-{@render children()}
-
 
 <style>
     h2 {
@@ -91,11 +91,6 @@
     h4 {
         font-size: 1.25rem;
         font-weight: 500;
-        margin: 0
-    }
-    p{
-        font-size: 1rem;
-        font-weight: 400;
         margin: 0
     }
 	.cover {

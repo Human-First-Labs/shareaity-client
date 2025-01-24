@@ -1,6 +1,6 @@
 <script lang="ts">
-	import PageCheck from '$lib/PageCheck.svelte';
 	import SupabaseAuth from '$lib/supabase/SupabaseAuth.svelte';
+	import UserCheck from '$lib/UserCheck.svelte';
 	import '../app.css';
 
 	let { children } = $props();
@@ -11,13 +11,13 @@
 </svelte:head>
 
 <SupabaseAuth>
-	<div class="app">
-		<PageCheck>
+	<UserCheck>
+		<div class="app">
 			<main>
 				{@render children()}
 			</main>
-		</PageCheck>
-	</div>
+		</div>
+	</UserCheck>
 </SupabaseAuth>
 
 <style>
