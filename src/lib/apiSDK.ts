@@ -20,6 +20,8 @@ export const requestInterceptor = async (config: InternalAxiosRequestConfig<unkn
     const token = await authToken()
     if (token) {
         config.headers.authorization = token
+    }else{
+        throw new Error('Failed to get Token')
     }
 
     return {
@@ -35,12 +37,12 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(requestInterceptor)
 
-const getMyUser = async (args: {
+const getMyUser = async (args?: {
     socketId?: string
     eventId?: string
     controller?: AbortController
 }) => {
-    const { socketId, eventId, controller } = args
+    const { socketId, eventId, controller } = args || {}
     return await axiosInstance.post<{
         user: IUser
         socketEvent: SocketEvent
