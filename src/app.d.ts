@@ -1,7 +1,7 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
 // for information about these interfaces
 import type { Session, SupabaseClient, User } from '@supabase/supabase-js'
-import type { Axios } from 'axios';
+import type { Socket } from 'socket.io-client';
 
 declare global {
   namespace App {
@@ -9,9 +9,7 @@ declare global {
     interface Locals {
       supabase: SupabaseClient
       safeGetSession: () => Promise<{ session: Session | null; user: User | null }>
-      session: Session | null
-      user: User | null
-      axios: Axios
+      websocket?: Socket
     }
     interface PageData {
       session: Session | null

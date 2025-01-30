@@ -7,7 +7,7 @@
 </svelte:head>
 
 <section>
-	<p>Test</p>
+	<a href="/test">Test</a>
 </section>
 
 <style>

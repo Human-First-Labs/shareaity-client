@@ -1,10 +1,11 @@
 import { createServerClient } from '@supabase/ssr'
-import { type Handle, redirect } from '@sveltejs/kit'
+import { type Handle, type HandleFetch,  } from '@sveltejs/kit'
 import { sequence } from '@sveltejs/kit/hooks'
 
 import { PUBLIC_SUPABASE_API_KEY, PUBLIC_SUPABASE_PROJECT_ID } from '$env/static/public'
 
 const PUBLIC_SUPABASE_URL = `https://${PUBLIC_SUPABASE_PROJECT_ID}.supabase.co`
+
 
 const supabase: Handle = async ({ event, resolve }) => {
   /**
@@ -64,20 +65,22 @@ const supabase: Handle = async ({ event, resolve }) => {
   })
 }
 
-// const authGuard: Handle = async ({ event, resolve }) => {
-//   const { session, user } = await event.locals.safeGetSession()
-//   event.locals.session = session
-//   event.locals.user = user
-
-//   if (!event.locals.session && event.url.pathname.startsWith('/private')) {
-//     redirect(303, '/auth')
-//   }
-
-//   if (event.locals.session && event.url.pathname === '/auth') {
-//     redirect(303, '/private')
-//   }
-
-//   return resolve(event)
-// }
-
 export const handle: Handle = sequence(supabase)
+
+export const handleFetch:HandleFetch = async ({request,fetch, event }) => {
+  const { session } = await event.locals.safeGetSession()
+
+  const newHeaders = new Headers(request.headers)
+
+  newHeaders.append('authorization', `Bearer ${session?.access_token}`)
+  if(event.locals.websocket?.connected && event.locals.websocket?.id){
+    newHeaders.append('x-socket-id', event.locals.websocket.id)
+  }
+
+  const newRequest = new Request(request.url, {
+    ...request,
+    headers: newHeaders,
+  })
+
+  return fetch(newRequest)
+}

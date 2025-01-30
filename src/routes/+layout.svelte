@@ -7,6 +7,7 @@
     let { data, children } = $props()
     let { session, supabase } = $derived(data)
 
+
     const VITE_TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY
 
 	const getCurrentSession = (captchaToken: string | undefined, controller?: AbortController) => {
@@ -42,8 +43,7 @@
 			controller?.signal.addEventListener("abort", abortHandler);
 		});
 	}
-
-
+	
     onMount(() => {
         const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
 			if (newSession?.expires_at !== session?.expires_at) {
@@ -60,7 +60,7 @@
 </script>
 
 <svelte:head>
-	<meta name="description" content="Svelte demo app" />
+	<meta name="description" content="A Web Application for Shareiety" />
 </svelte:head>
 
 {#if !session}
