@@ -15,7 +15,7 @@
 		"refresh-packages": "rm -rf node_modules && rm -rf package-lock.json && npm i"
 	},
 	"devDependencies": {
-		"@eslint/compat": "1.2.5",
+		"@eslint/compat": "1.2.6",
 		"@fontsource/fira-mono": "5.1.1",
 		"@sveltejs/adapter-auto": "4.0.0",
 		"@sveltejs/adapter-node": "5.2.12",
@@ -28,7 +28,7 @@
 		"npm-check": "6.0.1",
 		"prettier": "3.4.2",
 		"prettier-plugin-svelte": "3.3.3",
-		"svelte": "5.19.5",
+		"svelte": "5.19.6",
 		"svelte-check": "4.1.4",
 		"typescript": "5.7.3",
 		"typescript-eslint": "8.22.0",
