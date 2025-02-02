@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import '../app.css';
 	import { invalidate } from '$app/navigation';
 	import {Turnstile} from 'svelte-turnstile';
 	import type { LayoutProps } from '../../routes/$types';
