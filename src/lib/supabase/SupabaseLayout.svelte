@@ -7,7 +7,6 @@
     let { data, children }: LayoutProps = $props()
     let { session, supabase } = $derived(data)
 
-
     const VITE_TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY
 
 	const getCurrentSession = (captchaToken: string | undefined, controller?: AbortController) => {
@@ -20,7 +19,7 @@
 			const abortHandler = () => {
 				reject(new DOMException("Aborted", "AbortError"));
 			}
-			
+		
 			supabase.auth.getSession().then(async (response) => {
 				if(!captchaToken){
 					return reject(new Error("captcha token is missing"));
@@ -30,12 +29,14 @@
 						captchaToken
 					}
 				})
+				controller?.signal.removeEventListener("abort", abortHandler);
 				if(result.error){
-					console.error(result.error)
+					console.error(result.data)
+					reject(result.error);
+				}else{
+					resolve(response.data);
 				}
 
-				controller?.signal.removeEventListener("abort", abortHandler);
-				resolve(response.data);
 			}).catch((error) => {
 				controller?.signal.removeEventListener("abort", abortHandler);
 				reject(error);
@@ -91,10 +92,9 @@
 		flex: 1;
 		display: flex;
 		flex-direction: column;
-		padding: 1rem;
 		width: 100%;
 		max-width: 64rem;
-		margin: 0 auto;
+		margin: 0;
 		box-sizing: border-box;
 	}
 

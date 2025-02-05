@@ -6,13 +6,13 @@ import { PUBLIC_SUPABASE_API_KEY, PUBLIC_SUPABASE_PROJECT_ID } from '$env/static
 
 const PUBLIC_SUPABASE_URL = `https://${PUBLIC_SUPABASE_PROJECT_ID}.supabase.co`
 
-
 const supabase: Handle = async ({ event, resolve }) => {
   /**
    * Creates a Supabase client specific to this server request.
    *
    * The Supabase client gets the Auth token from the request cookies.
    */
+
   event.locals.supabase = createServerClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_API_KEY, {
     cookies: {
       getAll: () => event.cookies.getAll(),
